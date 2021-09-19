@@ -102,7 +102,8 @@ public class RestaurantDataHelperMongo {
                 groupByZipcode,
                 sortByCount
         );
-        List<RestaurantZipcodeCountEntity> restaurantEntities = mongoTemplate.aggregate(aggregation, "restaurant_details", RestaurantZipcodeCountEntity.class).getMappedResults();
+        List<RestaurantZipcodeCountEntity> restaurantEntities = mongoTemplate.aggregate(
+                aggregation, "restaurant_details", RestaurantZipcodeCountEntity.class).getMappedResults();
         logger.info("Found {} restaurants of the given cuisine per zipcode.", restaurantEntities.size());
         return restaurantEntities.stream()
                 .map(entity -> new RestaurantZipcodeCountDetails(entity.getZipcode(), entity.getCount()))
@@ -120,7 +121,8 @@ public class RestaurantDataHelperMongo {
                 groupByCuisine,
                 sortByRating
         );
-        List<RestaurantAvgRatingEntity> restaurantEntities = mongoTemplate.aggregate(aggregation, "restaurant_details", RestaurantAvgRatingEntity.class).getMappedResults();
+        List<RestaurantAvgRatingEntity> restaurantEntities = mongoTemplate.aggregate(
+                aggregation, "restaurant_details", RestaurantAvgRatingEntity.class).getMappedResults();
         logger.info("Found {} cuisines.", restaurantEntities.size());
         return restaurantEntities.stream()
                 .map(entity -> new RestaurantAvgRatingDetails(entity.getCuisine(), entity.getAvgRating()))

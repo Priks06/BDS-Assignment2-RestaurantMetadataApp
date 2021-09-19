@@ -59,17 +59,27 @@ public class RestaurantMetadataLoaderSpringBootApp implements CommandLineRunner 
                 switch (action) {
                     case "1":
                         System.out.println("Question 1: User provides a choice of cuisine and zipcode, the query returns a list of top 5 restaurant names \nwith full address and rating with results sorted descending order based on rating.\n");
-                        List<RestaurantTop5Details> restaurantsByCuisineAndZipcode = restaurantDataHelperMongo.findRestaurantsByCuisineAndZipcode("Lebanese", "CF243JH");
+                        System.out.println("Enter cuisine: [Example: Lebanese] ");
+                        String cuisine = sc.next();
+                        System.out.println("Enter zipcode: [Example: CF243JH] ");
+                        String zipcode = sc.next();
+                        List<RestaurantTop5Details> restaurantsByCuisineAndZipcode = restaurantDataHelperMongo.findRestaurantsByCuisineAndZipcode(cuisine, zipcode);
                         queryDisplayHelper.prettyPrintTop5(restaurantsByCuisineAndZipcode);
                         break;
                     case "2":
                         System.out.println("Question 2: User provides a string to be searched in the address field and a minimum rating. \nThe query returns all restaurant names and cuisine that match the inputs provided along with the match score. \nSort output by descending score.\n");
-                        List<RestaurantAddressSearchDetails> restaurantsByAddressAndMinRating = restaurantDataHelperMongo.findRestaurantsByAddressAndMinRating("Bristol", 4.5);
+                        System.out.println("Enter search string for address: [Example: Bristol] ");
+                        String addressSearchQuery = sc.next();
+                        System.out.println("Enter min rating: [Example: 4.5] ");
+                        double minRating = Double.parseDouble(sc.next());
+                        List<RestaurantAddressSearchDetails> restaurantsByAddressAndMinRating = restaurantDataHelperMongo.findRestaurantsByAddressAndMinRating(addressSearchQuery, minRating);
                         queryDisplayHelper.prettyPrintAddressSearch(restaurantsByAddressAndMinRating);
                         break;
                     case "3":
                         System.out.println("Question 3: Give a cuisine, output how many (i.e. count) matching restaurants are there per zip code. \nSort descending the 2 column output (zipcode, count) by the count.\n");
-                        List<RestaurantZipcodeCountDetails> restaurantsZipcodeCount = restaurantDataHelperMongo.findCountOfCuisinePerZipcode("Lebanese");
+                        System.out.println("Enter cuisine: [Example: Lebanese] ");
+                        cuisine = sc.next();
+                        List<RestaurantZipcodeCountDetails> restaurantsZipcodeCount = restaurantDataHelperMongo.findCountOfCuisinePerZipcode(cuisine);
                         queryDisplayHelper.prettyPrintZipcodeCount(restaurantsZipcodeCount);
                         break;
                     case "4":
